@@ -1,9 +1,7 @@
 {
   "spec": "./spec.ini",
   "lemmas": "./lemmas.k",
-  "bin_runtime": "./DsRpow.bin-runtime",
-  "source": "./DsRpow.sol",
-  "sourcemap": "./DsRpow.srcmap-runtime",
+  "source": "./DsRpower.sol",
   "host": "159.89.12.113:8080",
   "omit": [
     "generatedTop.ethereum.evm.callState.program",

@@ -16,6 +16,10 @@ rule 0 ^Int N => 1
 rule 0 ^Int N => 0
   requires N >Int 0
 
+
+rule X *Int Y /Int Y => X
+  requires X *Int Y <Int pow256
+
 // rule Z *Int (X ^Int (N /Int 2)) <Int pow256 ==K true
 //   requires Z *Int (X ^Int ( N )) <Int pow256 ==K true
 
@@ -31,7 +35,7 @@ rule N /Int 2 <Int pow256 => true
 // rule Z *Int X *Int (X *Int X) ^Int (N /Int 2) => Z *Int X ^Int N
 //   requires N modInt 2 ==Int 1
 
-//                         Z       X       N       Base
+//                      Z    X     N     Base
 syntax Int ::= #rpow ( Int , Int , Int , Int )  [function, smtlib(smt_rpow)]
 
 rule #rpow(Z, X, 0, Base) => Z
@@ -41,13 +45,13 @@ rule #rpow(((Z *Int X) +Int Half) /Int Base, X, 0, Base) =>
   requires Half ==Int Base /Int 2
 
 rule #rpow(((Z *Int X) +Int Half) /Int Base, ((X *Int X) +Int Half) /Int Base, N /Int 2, Base) =>
-     #rpow( Z                               , X                               , N       , Base )
+     #rpow(Z, X, N, Base)
   requires N modInt 2 =/=Int 0
   andBool  N >=Int 2
   andBool Half ==Int Base /Int 2
 
-rule #rpow( Z                              , ((X *Int X) +Int Half) /Int Base, N /Int 2, Base) =>
-     #rpow( Z                              , X                               , N       , Base )
+rule #rpow( Z, ((X *Int X) +Int Half) /Int Base, N /Int 2, Base) =>
+     #rpow( Z, X, N, Base )
   requires N modInt 2 ==Int 0
   andBool  N >=Int 2
   andBool Half ==Int Base /Int 2
