@@ -20,7 +20,7 @@ contract DsRpow {
                          * Set z := z * x, with rounding, reverting on overflow.
                          */
                         let zx := mul(z, x)
-                        if iszero(eq(div(zx, x), z)) { fail() }
+                        if and(iszero(iszero(x)), iszero(eq(div(zx, x), z))) { fail() }
                         let zxRound := add(zx, half) if lt(zxRound, zx) { fail() }
                         z := div(zxRound, base)
                     }
@@ -30,7 +30,7 @@ contract DsRpow {
                          * Set x := x * x, with rounding, reverting on overflow.
                          */
                         let xx := mul(x, x)
-                        if iszero(eq(div(xx, x), x)) { fail() }
+                        if and(iszero(iszero(x)), iszero(eq(div(xx, x), x))) { fail() }
                         let xxRound := add(xx, half) if lt(xxRound, xx) { fail() }
                         x := div(xxRound, base)
                     }

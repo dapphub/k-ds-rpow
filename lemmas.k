@@ -36,9 +36,10 @@ syntax Int ::= #rpow ( Int , Int , Int , Int )  [function, smtlib(smt_rpow)]
 
 rule #rpow(Z, X, 0, Base) => Z
 
-rule #rpow(((Z *Int X) +Int Half) /Int Base, X, 0, Base) =>
-     #rpow(Z,                                 X, 1, Base)
+rule #rpow(((Z *Int X) +Int Half) /Int Base, X, N /Int 2, Base) =>
+     #rpow(Z,                                 X, N,       Base)
   requires Half ==Int Base /Int 2
+  andBool  N ==Int 1
 
 rule #rpow(((Z *Int X) +Int Half) /Int Base, ((X *Int X) +Int Half) /Int Base, N /Int 2, Base) =>
      #rpow( Z                               , X                               , N       , Base )
