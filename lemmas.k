@@ -1,5 +1,9 @@
+syntax Int ::= "#ifInt" Bool "#then" Int "#else" Int "#fi" [function, smtlib(ite), hook(KEQUAL.ite)]
+
 rule A *Int C /Int C => A
   requires A *Int C <Int pow256
+
+rule (X *Int Y) /Word Y => #ifInt Y ==Int 0 #then 0 #else chop(X) #fi
 
 rule A /Int B <Int pow256 => true
   requires A <Int pow256
@@ -36,6 +40,10 @@ syntax Int ::= #rpow ( Int , Int , Int , Int )  [function, smtlib(smt_rpow)]
 
 rule #rpow(Z, X, 0, Base) => Z
 
+rule #rpow(Z, X, N, Base) =>
+     (Z *Int X +Int (Base /Int 2)) /Int Base
+  requires N ==Int 1
+
 rule #rpow(((Z *Int X) +Int Half) /Int Base, X, N /Int 2, Base) =>
      #rpow(Z,                                 X, N,       Base)
   requires Half ==Int Base /Int 2
@@ -52,3 +60,6 @@ rule #rpow( Z                              , ((X *Int X) +Int Half) /Int Base, N
   requires N modInt 2 ==Int 0
   andBool  N >=Int 2
   andBool Half ==Int Base /Int 2
+
+
+
