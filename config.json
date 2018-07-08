@@ -4,7 +4,8 @@
   "bin_runtime": "./DsRpow.bin-runtime",
   "source": "./DsRpow.sol",
   "sourcemap": "./DsRpow.srcmap-runtime",
-  "host": "159.89.12.113:8080",
+  "prelude": "./exp.smt2",
+  "host": "127.0.0.1:8080",
   "omit": [
     "generatedTop.ethereum.evm.callState.program",
     "generatedTop.ethereum.evm.callState.programBytes",
